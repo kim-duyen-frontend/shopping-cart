@@ -19,8 +19,38 @@ a {
   html {
     color-scheme: dark;
   }
+
   body {
     color: white;
     background: black;
   }
+}
+
+.RichEditor-editor {
+  min-height: 300px;
+}
+
+.RichEditor-editor>.DraftEditor-root {
+  font-size: 0.875rem;
+}
+
+.public-DraftStyleDefault-ltr {
+  text-align: inherit !important;
+}
+
+.align-text-left {
+  text-align: left;
+}
+
+.align-text-center {
+
+  text-align: center;
+}
+
+.align-text-right {
+  text-align: right;
+}
+
+.align-text-justify {
+  text-align: justify;
 }

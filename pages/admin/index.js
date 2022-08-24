@@ -1,11 +1,13 @@
 import React from 'react';
+import {useRouter} from "next/router"
 import AdminLayout from "../../components/admin-layout";
 
 const Admin = () => {
+    const router = useRouter();
     return (
         <div>
             <h1>Page Admin</h1>
-            {/* gọi các components */}
+            <button onClick={() => router.push("/add-product")}>Thêm sản phẩm</button>
         </div>
     );
 };
