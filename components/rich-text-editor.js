@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { changeTextEditor } from "../redux/actions";
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import styles from "../styles/richtext.module.scss";
 
-export default class RichTextEditor extends Component {
+class RichTextEditor extends Component {
     constructor(props) {
         super(props);
         this.state = { editorEnable: false, editorState: EditorState.createEmpty() };
         this.inputRef = React.createRef();
         this.focus = () => this.inputRef.current.editor.focus();
-        this.onChange = (editorState) => this.setState({ editorState });
+        this.onChange = (editorState) => {
+            this.setState({ editorState })
+            this.props.changeTextEditor(editorState);
+        };
         this.handleKeyCommand = (command) => this._handleKeyCommand(command);
         this.onTab = (e) => this._onTab(e);
         this.toggleBlockType = (type) => this._toggleBlockType(type);
@@ -42,10 +47,8 @@ export default class RichTextEditor extends Component {
     componentDidMount() {
         this.setState({ editorEnable: !this.state.editorEnable })
     }
-
     render() {
         const { editorState, editorEnable } = this.state;
-        // console.log("Editor State: ", editorState);
         let className = 'RichEditor-editor';
 
         var contentState = editorState.getCurrentContent();
@@ -75,7 +78,7 @@ export default class RichTextEditor extends Component {
                                 handleKeyCommand={this.handleKeyCommand}
                                 onChange={this.onChange}
                                 onTab={this.onTab}
-                                placeholder="Write some text..."
+                                placeholder="Mô tả sản phẩm..."
                                 ref={this.inputRef}
                                 spellCheck={true}
                             />
@@ -87,6 +90,11 @@ export default class RichTextEditor extends Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+    changeTextEditor: (editorState) => dispatch(changeTextEditor(editorState))
+})
+export default connect(null, mapDispatchToProps)(RichTextEditor);
 // Custom overrides for "code" style.
 const styleMap = {
     CODE: {
