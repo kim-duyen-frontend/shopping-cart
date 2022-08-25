@@ -9,6 +9,7 @@ const AddProduct = () => {
         price: ""
     })
     const [files, setFiles] = useState([]);
+    const [textEditor, setTextEditor] = useState({});
 
     const handleChangeInfo = (e, type) => {
         infoProduct[type] = e.target.value;
@@ -33,6 +34,10 @@ const AddProduct = () => {
     const handleSubmit = () => {
         console.log("check data file: ", files);
         console.log("check data product: ", { ...infoProduct });
+        console.log("check data editor text: ", textEditor);
+    }
+    const getTextEditor = (text) => {
+        setTextEditor(text)
     }
     
     return (
@@ -90,7 +95,7 @@ const AddProduct = () => {
                     </div>
                     <div className={styles.column}>
                         <div className={styles.editorText}>
-                            <RichTextEditor />
+                            <RichTextEditor getTextEditor={getTextEditor} />
                         </div>
                     </div>
                 </div>

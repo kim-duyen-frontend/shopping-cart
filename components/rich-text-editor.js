@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
-import { changeTextEditor } from "../redux/actions";
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import styles from "../styles/richtext.module.scss";
 
-class RichTextEditor extends Component {
+export default class RichTextEditor extends Component {
     constructor(props) {
         super(props);
         this.state = { editorEnable: false, editorState: EditorState.createEmpty() };
@@ -13,7 +11,7 @@ class RichTextEditor extends Component {
         this.focus = () => this.inputRef.current.editor.focus();
         this.onChange = (editorState) => {
             this.setState({ editorState })
-            this.props.changeTextEditor(editorState);
+            this.props.getTextEditor(JSON.stringify(editorState))
         };
         this.handleKeyCommand = (command) => this._handleKeyCommand(command);
         this.onTab = (e) => this._onTab(e);
@@ -91,10 +89,6 @@ class RichTextEditor extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    changeTextEditor: (editorState) => dispatch(changeTextEditor(editorState))
-})
-export default connect(null, mapDispatchToProps)(RichTextEditor);
 // Custom overrides for "code" style.
 const styleMap = {
     CODE: {
