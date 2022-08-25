@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
+import Sidebar from '../features/sidebar';
 
 const MainLayout = ({ children }) => {
     return (
@@ -10,7 +11,8 @@ const MainLayout = ({ children }) => {
                 <meta charset="utf-8" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main>{children}</main>
+            <Sidebar />
+            {children}
         </>
     );
 };
