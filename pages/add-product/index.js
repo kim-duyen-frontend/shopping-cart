@@ -6,6 +6,8 @@ const AddProduct = () => {
     const [infoProduct, setInfoProduct] = useState({
         title: "",
         brand: "",
+        origin: "",
+        brandOrigin: "",
         price: ""
     })
     const [files, setFiles] = useState([]);
@@ -39,7 +41,7 @@ const AddProduct = () => {
     const getTextEditor = (text) => {
         setTextEditor(text)
     }
-    
+
     return (
         <div className={styles.addProduct}>
             <div className="container">
@@ -61,34 +63,28 @@ const AddProduct = () => {
                                 placeholder='nhập thương hiệu'
                                 onChange={(e) => handleChangeInfo(e, "brand")}
                             />
+                            <label>Xuất xứ</label>
+                            <input
+                                className={styles.input}
+                                placeholder='nhập xuất xứ'
+                                onChange={(e) => handleChangeInfo(e, "origin")}
+                            />
+                            <label>Xuất xứ thương hiệu</label>
+                            <input
+                                className={styles.input}
+                                placeholder='nhập xuất xứ thương hiệu'
+                                onChange={(e) => handleChangeInfo(e, "brandOrigin")}
+                            />
                             <label>Giá sản phẩm:</label>
                             <input
                                 className={styles.input}
                                 placeholder='nhập giá sản phẩm'
                                 onChange={(e) => handleChangeInfo(e, "price")}
                             />
-                            <label>Tải hình 1:</label>
+                            <label>Tải hình:</label>
                             <input
                                 type="file"
                                 id={1}
-                                onChange={handleChangeFile}
-                            />
-                            <label>Tải hình 2:</label>
-                            <input
-                                type="file"
-                                id={2}
-                                onChange={handleChangeFile}
-                            />
-                            <label>Tải hình 3:</label>
-                            <input
-                                type="file"
-                                id={3}
-                                onChange={handleChangeFile}
-                            />
-                            <label>Tải hình 4:</label>
-                            <input
-                                type="file"
-                                id={4}
                                 onChange={handleChangeFile}
                             />
                         </div>
