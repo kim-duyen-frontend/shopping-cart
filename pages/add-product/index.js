@@ -1,47 +1,43 @@
 import React, { useState } from 'react';
-import RichTextEditor from '../../components/rich-text-editor';
+import { myAPI } from "../../utils/api/callAPI";
+import EditorTextDraft from '../../components/editor-text-draft';
 import styles from "../../styles/addproduct.module.scss";
+import Image from 'next/image';
 
 const AddProduct = () => {
-    const [infoProduct, setInfoProduct] = useState({
-        title: "",
-        brand: "",
-        origin: "",
-        brandOrigin: "",
-        price: ""
-    })
-    const [files, setFiles] = useState([]);
-    const [textEditor, setTextEditor] = useState({});
+    const [title, setTitle] = useState("");
+    const [brand, setBrand] = useState("");
+    const [origin, setOrigin] = useState("");
+    const [brandOrigin, setBrandOrigin] = useState("");
+    const [price, setPrice] = useState("");
+    const [imageFile, setImageFile] = useState("");
+    const [previewImage, setPreviewImage] = useState("");
 
-    const handleChangeInfo = (e, type) => {
-        infoProduct[type] = e.target.value;
-        setInfoProduct({ ...infoProduct })
+    const handleChangeImage = (e) => {
+        const selectedFile = e.target.files[0];
+        setImageFile(selectedFile);
+        const filePreview = URL.createObjectURL(selectedFile);
+        setPreviewImage(filePreview)
     }
-    const handleChangeFile = (e) => {
+
+    const handCreateContent = async () => {
+        try {
+            const response = await myAPI.post("/products", { title, brand, origin, brandOrigin, price }).then((json) => console.log("check data: ", json.data))
+            return response?.data;
+        } catch (error) {
+            console.log("Failed push data!!!", error);
+        }
+    }
+    const handleCreateImage = (e) => {
         e.preventDefault();
-        let id = e.target.id;
-        let file_reader = new FileReader();
-        let file = e.target.files[0];
-        file_reader.onload = () => {
-            setFiles([
-                ...files,
-                {
-                    file_id: id,
-                    uploaded_file: file_reader.result
-                }
-            ]);
-        };
-        file_reader.readAsDataURL(file);
+        const formData = new FormData();
+        formData.append('file', imageFile)
+        myAPI.post("/photos/upload", formData, {
+            headers: {
+                "enc-type": "multipart/form-data"
+            }
+        }).then((json) => console.log("check image: ", json)).catch((error) => console.log(error))
     }
-    const handleSubmit = () => {
-        console.log("check data file: ", files);
-        console.log("check data product: ", { ...infoProduct });
-        console.log("check data editor text: ", textEditor);
-    }
-    const getTextEditor = (text) => {
-        setTextEditor(text)
-    }
-
     return (
         <div className={styles.addProduct}>
             <div className="container">
@@ -55,53 +51,70 @@ const AddProduct = () => {
                             <input
                                 className={styles.input}
                                 placeholder='nhập tên sản phẩm'
-                                onChange={(e) => handleChangeInfo(e, "title")}
+                                type="text"
+                                onChange={(e) => setTitle(e.target.value)}
                             />
                             <label>Thương hiệu:</label>
                             <input
                                 className={styles.input}
                                 placeholder='nhập thương hiệu'
-                                onChange={(e) => handleChangeInfo(e, "brand")}
+                                type="text"
+                                onChange={(e) => setBrand(e.target.value)}
                             />
                             <label>Xuất xứ</label>
                             <input
                                 className={styles.input}
                                 placeholder='nhập xuất xứ'
-                                onChange={(e) => handleChangeInfo(e, "origin")}
+                                type="text"
+                                onChange={(e) => setOrigin(e.target.origin)}
                             />
                             <label>Xuất xứ thương hiệu</label>
                             <input
                                 className={styles.input}
                                 placeholder='nhập xuất xứ thương hiệu'
-                                onChange={(e) => handleChangeInfo(e, "brandOrigin")}
+                                type="text"
+                                onChange={(e) => setBrandOrigin(e.target.value)}
                             />
                             <label>Giá sản phẩm:</label>
                             <input
                                 className={styles.input}
                                 placeholder='nhập giá sản phẩm'
-                                onChange={(e) => handleChangeInfo(e, "price")}
+                                type="text"
+                                onChange={(e) => setPrice(e.target.value)}
                             />
-                            <label>Tải hình:</label>
-                            <input
-                                type="file"
-                                id={1}
-                                onChange={handleChangeFile}
-                            />
+                            <div className={styles.btnAdd}>
+                                <button onClick={handCreateContent}>tạo nội dung sản phẩm</button>
+                            </div>
                         </div>
                     </div>
                     <div className={styles.column}>
                         <div className={styles.editorText}>
-                            <RichTextEditor getTextEditor={getTextEditor} />
+                            <EditorTextDraft />
                         </div>
                     </div>
                 </div>
-                <div className={styles.btnAdd}>
-                    <button onClick={handleSubmit}>thêm sản phẩm</button>
+
+                <hr />
+                <div className={styles.picture}>
+                    <fieldset>
+                        <legend>Tải hình sản phẩm</legend>
+                        <input
+                            type="file"
+                            onChange={handleChangeImage}
+                        />
+                        <div className={styles.imageUpload}>
+                            {imageFile && <Image priority src={previewImage} width={100} height={100} objectFit='contain' alt="main image" />}
+                        </div>
+                        <div className={styles.btnAdd}>
+                            <button onClick={handleCreateImage}>tạo hình ảnh sản phẩm</button>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
-
         </div>
     );
 };
 
 export default AddProduct;
+
+
