@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import { myAPI } from "../../utils/api/callAPI";
-import EditorTextDraft from '../../components/editor-text-draft';
 import styles from "../../styles/addproduct.module.scss";
 import Image from 'next/image';
 
 const AddProduct = () => {
-    const [title, setTitle] = useState("");
-    const [brand, setBrand] = useState("");
-    const [origin, setOrigin] = useState("");
-    const [brandOrigin, setBrandOrigin] = useState("");
-    const [price, setPrice] = useState("");
+    const [infoProduct, setInfoProduct] = useState({
+        title: "",
+        brand: "",
+        origin: "",
+        brandOrigin: "",
+        price: "",
+        description: ""
+    })
     const [imageFile, setImageFile] = useState("");
     const [previewImage, setPreviewImage] = useState("");
 
+    const handleChangeField = (e, type) => {
+        infoProduct[type] = e.target.value;
+        setInfoProduct({ ...infoProduct })
+    }
     const handleChangeImage = (e) => {
         const selectedFile = e.target.files[0];
         setImageFile(selectedFile);
@@ -22,7 +28,7 @@ const AddProduct = () => {
 
     const handCreateContent = async () => {
         try {
-            const response = await myAPI.post("/products", { title, brand, origin, brandOrigin, price }).then((json) => console.log("check data: ", json.data))
+            const response = await myAPI.post("/products", infoProduct).then((json) => console.log("push data successfully: ", json.data))
             return response?.data;
         } catch (error) {
             console.log("Failed push data!!!", error);
@@ -38,6 +44,7 @@ const AddProduct = () => {
             }
         }).then((json) => console.log("check image: ", json)).catch((error) => console.log(error))
     }
+
     return (
         <div className={styles.addProduct}>
             <div className="container">
@@ -52,48 +59,47 @@ const AddProduct = () => {
                                 className={styles.input}
                                 placeholder='nhập tên sản phẩm'
                                 type="text"
-                                onChange={(e) => setTitle(e.target.value)}
+                                onChange={(e) => handleChangeField(e, "title")}
                             />
                             <label>Thương hiệu:</label>
                             <input
                                 className={styles.input}
                                 placeholder='nhập thương hiệu'
                                 type="text"
-                                onChange={(e) => setBrand(e.target.value)}
+                                onChange={(e) => handleChangeField(e, "brand")}
                             />
                             <label>Xuất xứ</label>
                             <input
                                 className={styles.input}
                                 placeholder='nhập xuất xứ'
                                 type="text"
-                                onChange={(e) => setOrigin(e.target.origin)}
+                                onChange={(e) => handleChangeField(e, "origin")}
                             />
                             <label>Xuất xứ thương hiệu</label>
                             <input
                                 className={styles.input}
                                 placeholder='nhập xuất xứ thương hiệu'
                                 type="text"
-                                onChange={(e) => setBrandOrigin(e.target.value)}
+                                onChange={(e) => handleChangeField(e, "brandOrigin")}
                             />
                             <label>Giá sản phẩm:</label>
                             <input
                                 className={styles.input}
                                 placeholder='nhập giá sản phẩm'
                                 type="text"
-                                onChange={(e) => setPrice(e.target.value)}
+                                onChange={(e) => handleChangeField(e, "price")}
                             />
-                            <div className={styles.btnAdd}>
-                                <button onClick={handCreateContent}>tạo nội dung sản phẩm</button>
-                            </div>
                         </div>
                     </div>
                     <div className={styles.column}>
                         <div className={styles.editorText}>
-                            <EditorTextDraft />
+                            <textarea rows={30} cols={100} placeholder="Nhập mô tả..." onChange={(e) => handleChangeField(e, "description")}></textarea>
                         </div>
                     </div>
                 </div>
-
+                <div className={styles.btnAdd}>
+                    <button onClick={handCreateContent}>tạo nội dung sản phẩm</button>
+                </div>
                 <hr />
                 <div className={styles.picture}>
                     <fieldset>
