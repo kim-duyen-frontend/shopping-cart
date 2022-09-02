@@ -99,6 +99,16 @@
     .show {
         left: 0;
     }
+
+    .contentAdmin {
+        padding: 2rem 0;
+
+        .actions {
+            height: 3rem;
+            display: flex;
+            align-items: center;
+        }
+    }
 }
 
 .spaceToggle {
