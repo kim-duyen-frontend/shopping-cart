@@ -4,9 +4,10 @@ import { useRouter } from "next/router";
 import { FaBars, FaHome, FaChartBar } from "react-icons/fa";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { RiLogoutBoxRLine } from "react-icons/ri";
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
 import styles from "../../styles/sidebar.module.scss";
 import { myAPI } from "../../utils/api/callAPI";
+import TablePagination from '@mui/material/TablePagination';
 import ItemProduct from '../../components/item-product';
 
 const Sidebar = () => {
@@ -14,9 +15,17 @@ const Sidebar = () => {
     const [productList, setProductList] = useState([]);
     const router = useRouter();
 
+    const [page, setPage] = useState(0);
+    const perPage = 10;
+
+    const handleChangePage = (event, newPage) => {
+        event.preventDefault();
+        setPage(newPage);
+    };
+
     const fetchProducts = async () => {
         const response = await myAPI.get("/products").then((json) => {
-            setProductList(json.data)
+            setProductList(json.data.data)
         });
         return response?.data;
     }
@@ -82,11 +91,20 @@ const Sidebar = () => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {productList.map((item) => (
+                        {productList.slice(page * perPage, (page + 1) * perPage).map((item) => (
                             <ItemProduct key={item._id} product={item} />
                         ))}
                     </Tbody>
                 </Table>
+                <div>
+                    <TablePagination
+                        component="div"
+                        count={productList.length}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        rowsPerPage={perPage}
+                    />
+                </div>
             </div>
         </div>
     );
