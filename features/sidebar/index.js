@@ -91,8 +91,8 @@ const Sidebar = () => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {productList.slice(page * perPage, (page + 1) * perPage).map((item) => (
-                            <ItemProduct key={item._id} product={item} />
+                        {productList && productList.length > 0 && productList.slice(page * perPage, (page + 1) * perPage).map((item) => (
+                            <ItemProduct key={item._id} product={item} fetchProducts={fetchProducts} />
                         ))}
                     </Tbody>
                 </Table>

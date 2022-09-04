@@ -7,7 +7,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import styles from "../styles/modaledit.module.scss"
 
-
 const style = {
     position: 'absolute',
     top: '50%',
@@ -19,7 +18,7 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-const ModalEditProduct = ({ isModalVisible, handleCloseModalEditProduct, dataProduct }) => {
+const ModalEditProduct = ({ isModalVisible, handleCloseModalEditProduct, dataProductModalEdit, refresh }) => {
     const [title, setTitle] = useState("");
     const [brand, setBrand] = useState("");
     const [origin, setOrigin] = useState("");
@@ -28,17 +27,18 @@ const ModalEditProduct = ({ isModalVisible, handleCloseModalEditProduct, dataPro
 
     useEffect(() => {
         if (isModalVisible) {
-            setTitle(dataProduct.title);
-            setBrand(dataProduct.brand);
-            setOrigin(dataProduct.origin);
-            setStore(dataProduct.store);
-            setPrice(dataProduct.price);
+            setTitle(dataProductModalEdit.title);
+            setBrand(dataProductModalEdit.brand);
+            setOrigin(dataProductModalEdit.origin);
+            setStore(dataProductModalEdit.store);
+            setPrice(dataProductModalEdit.price);
         }
-    }, [dataProduct])
+    }, [dataProductModalEdit])
 
     const handleSaveModalEditProduct = async () => {
-        const response = await myAPI.put(`/products/${dataProduct._id}`, { title: title, brand: brand, origin: origin, store: store, price: price });
+        const response = await myAPI.put(`/products/${dataProductModalEdit._id}`, { title: title, brand: brand, origin: origin, store: store, price: price });
         handleCloseModalEditProduct();
+        refresh();
         return response?.data;
     }
     return (
