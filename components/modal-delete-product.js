@@ -36,10 +36,10 @@ const ModalDeleteProduct = ({ openModalDelete, handleCloseModalDeleteProduct, da
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Text in a modal
+                        Xóa sản phẩm
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        Bạn có chắc muốn xóa sản phẩm ?
                     </Typography>
                     <Box className={styles.btnActiosnDelete}>
                         <Button variant="contained" onClick={handleDeleteProduct}>Xóa sản phẩm</Button>

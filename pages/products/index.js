@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductsLayout from '../../components/products-layout';
 
 const ProductsPage = () => {
     return (
@@ -7,5 +8,7 @@ const ProductsPage = () => {
         </div>
     );
 };
-
+ProductsPage.getLayout = function getLayout(page) {
+    return <ProductsLayout>{page}</ProductsLayout>
+}
 export default ProductsPage;
