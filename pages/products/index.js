@@ -1,10 +1,11 @@
 import React from 'react';
 import ProductsLayout from '../../components/products-layout';
+import ListProduct from '../../features/list-product';
 
 const ProductsPage = () => {
     return (
-        <div>
-            <h1>Trang bán hàng</h1>
+        <div className="productsPage">
+            <ListProduct />
         </div>
     );
 };
