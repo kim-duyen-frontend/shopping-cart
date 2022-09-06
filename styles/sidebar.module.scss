@@ -39,6 +39,7 @@
         background-color: #061b28;
         padding-top: 1rem;
         transition: 0.5s;
+        z-index: 2;
 
         .nav {
             display: flex;
@@ -102,8 +103,9 @@
 
     .contentAdmin {
         padding: 2rem 0;
+
         .actions {
-            height: 3rem;
+            height: 5rem;
             display: flex;
             align-items: center;
         }

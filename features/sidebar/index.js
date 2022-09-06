@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { FaBars, FaHome, FaChartBar } from "react-icons/fa";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { FaPlus } from "react-icons/fa";
 import styles from "../../styles/sidebar.module.scss";
 import { getProductsPage, myAPI } from "../../utils/api/callAPI";
 import { Pagination, Stack, Button } from '@mui/material';
@@ -81,7 +82,10 @@ const Sidebar = () => {
             </aside>
             <div className={styles.contentAdmin}>
                 <div className={styles.actions}>
-                    <Button variant="contained" onClick={() => router.push("/add-product")}>Thêm sản phẩm</Button>
+                    <Button variant="contained" onClick={() => router.push("/add-product")}>
+                        <FaPlus />
+                        <span>Thêm sản phẩm</span>
+                    </Button>
                 </div>
                 {productList.length > 0 && (
                     <Table>
