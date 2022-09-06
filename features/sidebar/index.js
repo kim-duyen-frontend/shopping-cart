@@ -7,7 +7,8 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa";
 import styles from "../../styles/sidebar.module.scss";
 import { getProductsPage, myAPI } from "../../utils/api/callAPI";
-import { Pagination, Stack, Button } from '@mui/material';
+import { Stack, Button } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
 import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
 import ItemProductAdmin from '../../components/item-product-admin';
 
@@ -110,7 +111,7 @@ const Sidebar = () => {
                 )}
                 <div className={styles.btnNumberPages}>
                     <Stack spacing={2}>
-                        <Pagination color="primary" variant="outlined" shape="rounded" count={totalPages.last_page} page={pagesArray} onChange={(event, value) => setPage(value)} />
+                        <Pagination color="primary" variant="outlined" shape="rounded" count={totalPages.last_page} page={parseInt(pagesArray.join())} onChange={(event, value) => setPage(value)} />
                     </Stack>
                 </div>
             </div>
