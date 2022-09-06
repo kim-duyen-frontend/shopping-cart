@@ -1,16 +1,16 @@
-import { Box, Typography } from '@mui/material';
-import Image from 'next/image';
+import { Box, Skeleton } from '@mui/material';
 import React from 'react';
 import formatNumberToVND from "../utils/currency";
+import styles from "../styles/itemproduct.module.scss";
 
 const ItemProduct = ({ product }) => {
     return (
         <Box padding={1}>
             <Box>
-                <Image src="/products/balo-1.png" width={200} height={200} alt={product.title} />
+                <Skeleton variant="rectangular" width={210} height={200} />
             </Box>
-            <Typography>{product.title}</Typography>
-            <Typography>{formatNumberToVND(product.price)}</Typography>
+            <h3 className={styles.title}>{product.title}</h3>
+            <div className={styles.price}>{formatNumberToVND(product.price)}</div>
         </Box>
     );
 };
