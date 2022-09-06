@@ -5,7 +5,7 @@ import styles from "../styles/itemproduct.module.scss";
 
 const ItemProduct = ({ product }) => {
     return (
-        <Box padding={1}>
+        <Box padding={1} className={styles.itemProduct}>
             <Box>
                 <Skeleton variant="rectangular" width={210} height={200} />
             </Box>

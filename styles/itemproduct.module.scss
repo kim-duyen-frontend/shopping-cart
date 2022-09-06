@@ -1,10 +1,17 @@
-.title {
-    font-size: 0.875rem;
-    font-weight: 400;
-}
+.itemProduct {
+    .title {
+        font-size: 0.875rem;
+        font-weight: 400;
+    }
 
-.price {
-    font-size: 1rem;
-    font-weight: 500;
-    text-align: left;
+    .price {
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: left;
+    }
+
+    &:hover {
+        background-color: #fff;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
 }
