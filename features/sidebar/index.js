@@ -4,34 +4,38 @@ import { useRouter } from "next/router";
 import { FaBars, FaHome, FaChartBar } from "react-icons/fa";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { RiLogoutBoxRLine } from "react-icons/ri";
-import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
 import styles from "../../styles/sidebar.module.scss";
-import { myAPI } from "../../utils/api/callAPI";
-import TablePagination from '@mui/material/TablePagination';
-import ItemProduct from '../../components/item-product';
+import { getProductsPage, myAPI } from "../../utils/api/callAPI";
+import { Pagination, Stack, Button } from '@mui/material';
+import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
+import ItemProductAdmin from '../../components/item-product-admin';
 
 const Sidebar = () => {
     const [show, setShow] = useState(false);
     const [productList, setProductList] = useState([]);
+    const [totalPages, setTotalPages] = useState([]);
     const router = useRouter();
-
-    const [page, setPage] = useState(0);
-    const perPage = 10;
-
-    const handleChangePage = (event, newPage) => {
-        event.preventDefault();
-        setPage(newPage);
-    };
+    const [page, setPage] = useState(1);
 
     const fetchProducts = async () => {
-        const response = await myAPI.get("/products").then((json) => {
-            setProductList(json.data.data)
+        const response = await myAPI.get(`/products?page=${page}`).then((json) => {
+            setProductList(json.data.data);
         });
         return response?.data;
     }
+
     useEffect(() => {
         fetchProducts();
     }, [])
+
+    useEffect(() => {
+        getProductsPage(page).then((json) => {
+            setTotalPages(json);
+            setProductList(json.data)
+        })
+    }, [page])
+
+    const pagesArray = Array(totalPages.total).fill().map((_, index) => index + 1);
     return (
         <div className={`${styles.main} ${show ? styles.spaceToggle : null}`}>
             <header className={`${styles.header} ${show ? styles.spaceToggle : null}`}>
@@ -77,33 +81,33 @@ const Sidebar = () => {
             </aside>
             <div className={styles.contentAdmin}>
                 <div className={styles.actions}>
-                    <button onClick={() => router.push("/add-product")}>Thêm sản phẩm</button>
+                    <Button variant="contained" onClick={() => router.push("/add-product")}>Thêm sản phẩm</Button>
                 </div>
-                <Table>
-                    <Thead>
-                        <Tr>
-                            <Th>Tên sản phẩm</Th>
-                            <Th>Thương Hiệu</Th>
-                            <Th>Xuất xứ</Th>
-                            <Th>Số lượng kho</Th>
-                            <Th>Giá tiền</Th>
-                            <Th>Hành động</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {productList && productList.length > 0 && productList.slice(page * perPage, (page + 1) * perPage).map((item) => (
-                            <ItemProduct key={item._id} product={item} fetchProducts={fetchProducts} />
-                        ))}
-                    </Tbody>
-                </Table>
-                <div>
-                    <TablePagination
-                        component="div"
-                        count={productList.length}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        rowsPerPage={perPage}
-                    />
+                {productList.length > 0 && (
+                    <Table>
+                        <Thead>
+                            <Tr>
+                                <Th>Tên sản phẩm</Th>
+                                <Th>Thương Hiệu</Th>
+                                <Th>Xuất xứ</Th>
+                                <Th>Số lượng kho</Th>
+                                <Th>Giá tiền</Th>
+                                <Th>Hành động</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            <>
+                                {productList.map((item) => (
+                                    <ItemProductAdmin key={item._id} product={item} fetchProducts={fetchProducts} />
+                                ))}
+                            </>
+                        </Tbody>
+                    </Table>
+                )}
+                <div className={styles.btnNumberPages}>
+                    <Stack spacing={2}>
+                        <Pagination color="primary" variant="outlined" shape="rounded" count={totalPages.last_page} page={pagesArray} onChange={(event, value) => setPage(value)} />
+                    </Stack>
                 </div>
             </div>
         </div>
