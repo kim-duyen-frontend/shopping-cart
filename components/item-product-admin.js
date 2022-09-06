@@ -4,6 +4,7 @@ import ModalEditProduct from './modal-edit-product';
 import ModalDeleteProduct from './modal-delete-product';
 import { Tr, Td } from 'react-super-responsive-table';
 import { Stack, Button } from '@mui/material';
+import formatNumberToVND from "../utils/currency";
 
 const ItemProductAdmin = ({ product, fetchProducts }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -29,7 +30,7 @@ const ItemProductAdmin = ({ product, fetchProducts }) => {
                 <Td>{product.brand}</Td>
                 <Td>{product.origin}</Td>
                 <Td>{product.store}</Td>
-                <Td>{product.price}</Td>
+                <Td>{formatNumberToVND(product.price)}</Td>
                 <Td>
                     <Stack spacing={2} direction="row">
                         <Button variant="contained" color="warning" size="large" onClick={() => handleOpenModalEditProduct(product)}><FaEdit /></Button>

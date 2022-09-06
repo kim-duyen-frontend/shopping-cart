@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductsLayout from '../../components/products-layout';
-import { Box, Container, Grid, Paper } from '@mui/material';
+import { Box, Container, Grid, Pagination, Paper, Typography } from '@mui/material';
 import styles from "../../styles/productspage.module.scss";
-import { myAPI } from "../../utils/api/callAPI";
+import { getProductsPage } from "../../utils/api/callAPI";
 import ItemProduct from '../../components/item-product';
 
-export const getStaticProps = async () => {
-    try {
-        const response = await myAPI.get("http://localhost:5000/products");
-        const data = response.data.data;
-        return {
-            props: {
-                products: data
-            }
-        }
-    } catch (error) {
-        console.log(error);
-    }
-}
-const ProductsPage = ({ products }) => {
+// export const getStaticProps = async () => {
+//     try {
+//         const response = await myAPI.get("http://localhost:5000/products");
+//         const data = response.data.data;
+//         return {
+//             props: {
+//                 products: data
+//             }
+//         }
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+const ProductsPage = () => {
+    const [page, setPage] = useState(1);
+    const [productList, setProductList] = useState([]);
+    const [totalPages, setTotalPages] = useState([]);
+
+    useEffect(() => {
+        getProductsPage(page).then((json) => {
+            setProductList(json.data)
+            setTotalPages(json);
+        })
+    }, [page])
+    const pagesArray = Array(totalPages.total).fill().map((_, index) => index + 1);
+
     return (
         <Box pt={4}>
             <Container>
@@ -32,16 +44,15 @@ const ProductsPage = ({ products }) => {
                         <Paper elevation={0}>
                             <Box>
                                 <Grid container>
-                                    {products.map((item) => (
+                                    {productList.map((item) => (
                                         <Grid item key={item._id} xs={12} sm={6} md={4} lg={3}>
                                             <ItemProduct product={item} />
                                         </Grid>
                                     ))}
                                 </Grid>
                             </Box>
-
-
                         </Paper>
+                        <Pagination count={totalPages.last_page} page={pagesArray} onChange={(event, value) => setPage(value)} />
                     </Grid>
                 </Grid>
             </Container>
