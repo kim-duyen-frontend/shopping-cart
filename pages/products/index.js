@@ -3,13 +3,27 @@ import ProductsLayout from '../../components/products-layout';
 import { Box, Container, Grid, Paper } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import styles from "../../styles/productspage.module.scss";
-import { getProductsPage } from "../../utils/api/callAPI";
+import { getProductsPage, myAPI } from "../../utils/api/callAPI";
 import ItemProduct from '../../components/item-product';
 
-const ProductsPage = () => {
+export const getStaticProps = async () => {
+    try {
+        const response = await myAPI.get("/categories");
+        const data = response.data;
+        return {
+            props: {
+                category: data
+            }
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+const ProductsPage = ({ category }) => {
     const [page, setPage] = useState(1);
     const [productList, setProductList] = useState([]);
     const [totalPages, setTotalPages] = useState([]);
+    const [categoryList, setCategoryList] = useState([]);
 
     useEffect(() => {
         getProductsPage(page).then((json) => {
@@ -18,14 +32,27 @@ const ProductsPage = () => {
         })
     }, [page])
     const pagesArray = Array(totalPages.total).fill().map((_, index) => index + 1);
-    
+
+    useEffect(() => {
+        setCategoryList(category);
+    }, [])
+
     return (
         <Box pt={4}>
             <Container>
                 <Grid container spacing={1}>
                     <Grid item className={styles.leftCol}>
                         <Paper elevation={0}>
-                            Left column
+                            <Box>
+                                <h4 className={styles.title}>danh mục sản phẩm</h4>
+                                <ul className={styles.listCategory}>
+                                    {categoryList.map((item) => (
+                                        <li key={item._id}>
+                                            <a>{item.name}</a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Box>
                         </Paper>
                     </Grid>
                     <Grid item className={styles.rightCol}>

@@ -85,12 +85,13 @@ const AddProduct = () => {
                                 onChange={(e) => handleChangeField(e, "brandOrigin")}
                             />
                             <label>Loại sản phẩm</label>
-                            <input
-                                className={styles.input}
-                                placeholder="nhập loại sản phẩm"
-                                type="text"
-                                onChange={(e) => handleChangeField(e, "category")}
-                            />
+                            <select className={styles.input} onChange={(e) => handleChangeField(e, "category")}>
+                                <option value="Chọn loại:">Chọn loại:</option>
+                                <option value="Balo nữ">Balo nữ</option>
+                                <option value="Balo nam">Balo nam</option>
+                                <option value="Balo In Hình">Balo In Hình</option>
+                                <option value="Túi xách & Balo">Túi xách & Balo</option>
+                            </select>
                             <label>Kho hàng:</label>
                             <input
                                 className={styles.input}
