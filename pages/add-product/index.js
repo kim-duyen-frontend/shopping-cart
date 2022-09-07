@@ -9,6 +9,7 @@ const AddProduct = () => {
         brand: "",
         origin: "",
         brandOrigin: "",
+        category: "",
         store: "",
         price: "",
         description: ""
@@ -82,6 +83,13 @@ const AddProduct = () => {
                                 placeholder='nhập xuất xứ thương hiệu'
                                 type="text"
                                 onChange={(e) => handleChangeField(e, "brandOrigin")}
+                            />
+                            <label>Loại sản phẩm</label>
+                            <input
+                                className={styles.input}
+                                placeholder="nhập loại sản phẩm"
+                                type="text"
+                                onChange={(e) => handleChangeField(e, "category")}
                             />
                             <label>Kho hàng:</label>
                             <input
