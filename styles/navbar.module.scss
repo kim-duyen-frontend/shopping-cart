@@ -1,0 +1,35 @@
+.navbar {
+    .container {
+        height: 6rem;
+        background-color: #1A94FF;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        .inputSearch {
+            width: 50%;
+            height: 44px;
+            padding-left: 0.5rem;
+            border: none;
+            display: block;
+            font-size: 1rem;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+@media (max-width:640px) {
+    .navbar {
+        .container {
+            flex-direction: column;
+            height: 10rem;
+            padding: 0 0.875rem;
+            .inputSearch {
+                width: 100%;
+            }
+        }
+    }
+}

@@ -2,6 +2,7 @@ import { Paper } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import Navbar from '../../features/navbar';
 import styles from "../../styles/detailproduct.module.scss";
 import { myAPI } from "../../utils/api/callAPI";
 import formatNumberToVND from "../../utils/currency";
@@ -46,6 +47,7 @@ const DetailProduct = ({ id }) => {
 
     return (
         <div className={styles.detailProduct}>
+            <Navbar />
             <div className="container">
                 <div className={styles.container}>
                     <div className={styles.leftCol}>
