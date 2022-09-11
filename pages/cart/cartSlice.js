@@ -8,9 +8,8 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart(state, action) {
-            console.log("check data redux: ", action);
             const newItem = action.payload;
-            const index = state.cartItems.findIndex((item) => item.id === newItem.id);
+            const index = state.cartItems.findIndex((item) => item.id == newItem.id);
             if (index >= 0) {
                 state.cartItems[index].quantity += newItem.quantity;
             } else {
@@ -19,7 +18,7 @@ const cartSlice = createSlice({
         },
         setQuantity(state, action) {
             const { id, quantity } = action.payload;
-            const index = state.cartItems.findIndex((item) => item.id === id);
+            const index = state.cartItems.findIndex((item) => item.id == id);
             if (index >= 0) {
                 state.cartItems[index].quantity = quantity;
             }

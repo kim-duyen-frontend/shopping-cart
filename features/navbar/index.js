@@ -5,8 +5,8 @@ import { useRouter } from 'next/router'
 import React from 'react';
 import styles from "../../styles/navbar.module.scss";
 
-const Navbar = () => {
-    const router = useRouter()
+const Navbar = ({ quantity }) => {
+    const router = useRouter();
     return (
         <div className={styles.navbar}>
             <div className={styles.container}>
@@ -15,8 +15,8 @@ const Navbar = () => {
                 </div>
                 <input className={styles.inputSearch} placeholder="Tìm sản phẩm" />
                 <div className={styles.info}>
-                    <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={() => router.push("/cart")}>
-                        <Badge badgeContent={1} color="error">
+                    <IconButton size="large" aria-label="show product" color="inherit" onClick={() => router.push("/cart")}>
+                        <Badge badgeContent={quantity} color="error">
                             <ShoppingCartOutlinedIcon color="white" fontSize="large" />
                         </Badge>
                     </IconButton>

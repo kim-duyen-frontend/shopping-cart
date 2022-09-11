@@ -47,7 +47,8 @@ const DetailProduct = ({ id }) => {
         setSlideIndex(index);
     }
 
-    const handleAddToCart = () => {
+    const handleAddToCart = (event, quantity) => {
+        event.preventDefault();
         dispatch(addToCart({
             id: dataProduct._id,
             product: dataProduct,
@@ -56,7 +57,7 @@ const DetailProduct = ({ id }) => {
     }
     return (
         <div className={styles.detailProduct}>
-            <Navbar />
+            <Navbar quantity={quantity} />
             <div className="container">
                 <div className={styles.container}>
                     <div className={styles.leftCol}>
@@ -97,7 +98,7 @@ const DetailProduct = ({ id }) => {
                             <input className={styles.inputNumber} value={quantity} onChange={handleChangeQty} />
                             <button className={styles.plus} onClick={() => setQuantity((prevQty) => prevQty + 1)}>+</button>
                         </div>
-                        <div className={styles.btnBuy} onClick={handleAddToCart}>Chọn mua</div>
+                        <div className={styles.btnBuy} onClick={(event) => handleAddToCart(event, quantity)}>Chọn mua</div>
                     </div>
                 </div>
                 <div className={styles.infoDetail}>
