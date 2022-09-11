@@ -1,10 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Navbar from '../../features/navbar';
 import styles from "../../styles/detailproduct.module.scss";
 import { myAPI } from "../../utils/api/callAPI";
 import formatNumberToVND from "../../utils/currency";
+import { addToCart } from "../cart/cartSlice"
 
 const DetailProduct = ({ id }) => {
     const [dataProduct, setDataProduct] = useState({});
@@ -24,6 +26,7 @@ const DetailProduct = ({ id }) => {
         }
     ];
     const [slideIndex, setSlideIndex] = useState(0);
+    const dispatch = useDispatch();
 
     const getProductById = async () => {
         const response = await myAPI.get(`/products/${id}`).then((json) => setDataProduct(json.data));
@@ -44,6 +47,13 @@ const DetailProduct = ({ id }) => {
         setSlideIndex(index);
     }
 
+    const handleAddToCart = () => {
+        dispatch(addToCart({
+            id: dataProduct._id,
+            product: dataProduct,
+            quantity
+        }))
+    }
     return (
         <div className={styles.detailProduct}>
             <Navbar />
@@ -87,7 +97,7 @@ const DetailProduct = ({ id }) => {
                             <input className={styles.inputNumber} value={quantity} onChange={handleChangeQty} />
                             <button className={styles.plus} onClick={() => setQuantity((prevQty) => prevQty + 1)}>+</button>
                         </div>
-                        <div className={styles.btnBuy}>Chọn mua</div>
+                        <div className={styles.btnBuy} onClick={handleAddToCart}>Chọn mua</div>
                     </div>
                 </div>
                 <div className={styles.infoDetail}>
