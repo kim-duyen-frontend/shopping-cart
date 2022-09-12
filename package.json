@@ -24,7 +24,7 @@
     "react-redux": "7.2.1",
     "react-super-responsive-table": "^5.2.1",
     "react-toastify": "9.0.8",
-    "recharts": "^2.1.14",
+    "recharts": "2.1.12",
     "redux-devtools-extension": "2.13.9",
     "sass": "^1.54.5"
   },
