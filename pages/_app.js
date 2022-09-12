@@ -1,5 +1,6 @@
 import '../styles/main.scss'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { Provider } from "react-redux";
 import store from "../app/store";
 
