@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    cartItems: []
+    cartItems: typeof window !== "undefined" && localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : []
 }
 const cartSlice = createSlice({
     name: "cart",
@@ -15,6 +15,7 @@ const cartSlice = createSlice({
             } else {
                 state.cartItems.push(newItem);
             }
+            typeof window !== "undefined" && localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         },
         setQuantity(state, action) {
             const { id, quantity } = action.payload;
