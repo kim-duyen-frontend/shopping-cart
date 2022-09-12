@@ -9,7 +9,6 @@
             margin: 0.875rem 0 0 0;
             padding: 0 1rem;
 
-
             .btnDelete {
                 font-size: 0.875rem;
                 color: blue;
@@ -22,7 +21,7 @@
         .totalPrice {
             display: flex;
             flex-direction: column;
-            align-items: end;
+            align-items: flex-end;
         }
 
         .numberCart {
