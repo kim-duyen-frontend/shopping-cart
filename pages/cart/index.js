@@ -6,8 +6,17 @@ import { cartTotalSelector } from "../cart/selectors";
 import { removeFromCart } from "../cart/cartSlice";
 import styles from "../../styles/cart.module.scss";
 import formatNumberToVND from "../../utils/currency";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
+const NoSsr = (props) => {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => {
+        setMounted(true);
+    }, [])
+    return <>
+        {mounted ? props.children : null}
+    </>
+}
 const CartPage = () => {
     const productCart = useSelector((state) => state.cart.cartItems);
     const cartTotal = useSelector(cartTotalSelector);
@@ -19,21 +28,23 @@ const CartPage = () => {
         setIsCheck(true);
         dispatch(removeFromCart(cartItem));
     }
-    
+
     return (
         <div className={styles.cartPage}>
             <div className="container">
                 <div className={styles.container}>
                     <div>Giỏ hàng {productCart.length}</div>
-                    {productCart.map((item) => (
-                        <div className={styles.lineProduct} key={item.product._id}>
-                            <Image priority src="/products/balo-1.png" width={100} height={100} />
-                            <h4>{item.product.title}</h4>
-                            <p>{item.quantity}</p>
-                            <p>{formatNumberToVND(cartTotal)}</p>
-                            <button className={styles.btnDelete} onClick={() => handleDeleteProduct(item)}>Xóa</button>
-                        </div>
-                    ))}
+                    <NoSsr>
+                        {productCart.map((item) => (
+                            <div className={styles.lineProduct} key={item.product._id}>
+                                <Image priority src="/products/balo-1.png" width={100} height={100} />
+                                <h4>{item.product.title}</h4>
+                                <p>{item.quantity}</p>
+                                <p>{formatNumberToVND(cartTotal)}</p>
+                                <button className={styles.btnDelete} onClick={() => handleDeleteProduct(item)}>Xóa</button>
+                            </div>
+                        ))}
+                    </NoSsr>
                     <div className={styles.btnbuy} onClick={() => router.push("/checkout")}>Tiến hành đặt hàng</div>
                 </div>
             </div>
