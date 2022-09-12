@@ -6,16 +6,20 @@ import { cartTotalSelector } from "../cart/selectors";
 import { removeFromCart } from "../cart/cartSlice";
 import styles from "../../styles/cart.module.scss";
 import formatNumberToVND from "../../utils/currency";
+import { useState } from 'react';
 
 const CartPage = () => {
     const productCart = useSelector((state) => state.cart.cartItems);
     const cartTotal = useSelector(cartTotalSelector);
     const dispatch = useDispatch();
     const router = useRouter();
+    const [check, setIsCheck] = useState(false);
 
-    const handleDeleteProduct = (id) => {
-        dispatch(removeFromCart(id));
+    const handleDeleteProduct = (cartItem) => {
+        setIsCheck(true);
+        dispatch(removeFromCart(cartItem));
     }
+    
     return (
         <div className={styles.cartPage}>
             <div className="container">
@@ -27,7 +31,7 @@ const CartPage = () => {
                             <h4>{item.product.title}</h4>
                             <p>{item.quantity}</p>
                             <p>{formatNumberToVND(cartTotal)}</p>
-                            <p className={styles.btnDelete} onClick={() => handleDeleteProduct(item.product._id)}>Xóa</p>
+                            <button className={styles.btnDelete} onClick={() => handleDeleteProduct(item)}>Xóa</button>
                         </div>
                     ))}
                     <div className={styles.btnbuy} onClick={() => router.push("/checkout")}>Tiến hành đặt hàng</div>
