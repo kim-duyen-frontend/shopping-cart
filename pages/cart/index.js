@@ -33,19 +33,22 @@ const CartPage = () => {
         <div className={styles.cartPage}>
             <div className="container">
                 <div className={styles.container}>
-                    <div>Giỏ hàng {productCart.length}</div>
+                    <h4 className={styles.numberCart}>Giỏ hàng ({productCart.length})</h4>
                     <NoSsr>
                         {productCart.map((item) => (
                             <div className={styles.lineProduct} key={item.product._id}>
-                                <Image priority src="/products/balo-1.png" width={100} height={100} />
-                                <h4>{item.product.title}</h4>
+                                <Image priority src="/products/balo-1.png" width={150} height={150} objectFit="contain" />
+                                <p>{item.product.title}</p>
                                 <p>{item.quantity}</p>
-                                <p>{formatNumberToVND(cartTotal)}</p>
+                                <p>{formatNumberToVND(item.product.price)}</p>
                                 <button className={styles.btnDelete} onClick={() => handleDeleteProduct(item)}>Xóa</button>
                             </div>
                         ))}
                     </NoSsr>
-                    <div className={styles.btnbuy} onClick={() => router.push("/checkout")}>Tiến hành đặt hàng</div>
+                    <div className={styles.totalPrice}>
+                        <h3>Tổng tiền: {formatNumberToVND(cartTotal)}</h3>
+                        <div className={styles.btnbuy} onClick={() => router.push("/checkout")}>Tiến hành đặt hàng</div>
+                    </div>
                 </div>
             </div>
         </div>
