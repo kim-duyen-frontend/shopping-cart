@@ -1,31 +1,5 @@
-.leftCol {
-    width: 250px;
-
-    .title {
-        margin: 0px;
-        line-height: 20px;
-        font-size: 0.875rem;
-        padding: 0.875rem;
-        font-weight: 500;
-        text-transform: uppercase;
-    }
-
-    .listCategory {
-        margin: 0;
-        padding: 0 0.875rem;
-
-        >li {
-            list-style-type: none;
-
-            a {
-                padding: 0 0 0.5rem;
-                font-size: 0.875rem;
-                display: block;
-            }
-        }
-    }
-}
-
-.rightCol {
-    flex: 1 1 0;
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem 0;
 }

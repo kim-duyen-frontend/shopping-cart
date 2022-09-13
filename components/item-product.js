@@ -9,7 +9,7 @@ const ItemProduct = ({ product }) => {
         <Link href="/products/[id]" as={`/products/${product._id}`}>
             <Box padding={1} className={styles.itemProduct}>
                 <Box>
-                    <Skeleton variant="rectangular" width={210} height={200} />
+                    <Skeleton variant="rectangular" width={270} height={200} />
                 </Box>
                 <h3 className={styles.title}>{product.title}</h3>
                 <div className={styles.price}>{formatNumberToVND(product.price)}</div>
