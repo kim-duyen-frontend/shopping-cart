@@ -5,6 +5,7 @@ import Pagination from '@mui/material/Pagination';
 import styles from "../../styles/productspage.module.scss";
 import { getProductsPage } from "../../utils/api/callAPI";
 import ItemProduct from '../../components/item-product';
+import Navbar from '../../features/navbar';
 
 const ProductsPage = () => {
     const [page, setPage] = useState(1);
@@ -20,7 +21,8 @@ const ProductsPage = () => {
     const pagesArray = Array(totalPages.total).fill().map((_, index) => index + 1);
 
     return (
-        <Box pt={4}>
+        <Box>
+            <Navbar />
             <Container>
                 <Grid container spacing={1}>
                     <Grid item>
