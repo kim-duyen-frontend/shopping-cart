@@ -1,48 +1,66 @@
-import React from 'react';
-import {
-    Tooltip,
-    BarChart,
-    XAxis,
-    YAxis,
-    Legend,
-    CartesianGrid,
-    Bar,
-} from 'recharts';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from "react-redux";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale } from "chart.js";
+import { Bar } from "react-chartjs-2";
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+)
 
 const ChartProduct = () => {
-    const data = [
-        { name: "Facebook", users: 2000000000 },
-        { name: "Instagram", users: 1500000000 },
-        { name: "Twiter", users: 1000000000 },
-        { name: "Telegram", users: 500000000 },
-    ];
+    const productCart = useSelector((state) => state.cart.cartItems);
+    const [dataSale, setDataSale] = useState([]);
+
+    useEffect(() => {
+        setDataSale(productCart.map((item) => ({
+            name: item.product.title,
+            qty: item.quantity
+        })))
+    }, [])
+    var data = {
+        labels: dataSale.map(item => item.name),
+        datasets: [{
+            label: "# of Votes",
+            data: dataSale.map(item => item.qty),
+            backgroundColor: [
+                'rgba(255,99,132,0.2)',
+                'rgba(54,162,235,0.2)',
+                'rgba(255,206,86,0.2)',
+                'rgba(75,192,192,0.2)',
+                'rgba(153,102,255,0.2)',
+                'rgba(255,159,64,0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    }
+    var options = {
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        legend: {
+            labels: {
+                fontSize: 26
+            }
+        }
+    }
     return (
         <div>
-            <h1>Biểu đồ bán hàng</h1>
-            <div>
-                <BarChart
-                    width={500}
-                    height={300}
-                    data={data}
-                    margin={{
-                        top: 5,
-                        right: 30,
-                        left: 80,
-                        bottom: 5,
-                    }}
-                    barSize={20}
-                >
-                    <XAxis
-                        dataKey="name"
-                        scale="point"
-                        padding={{ left: 10, right: 10 }}
-                    />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <Bar dataKey="users" fill="#8884d8" background={{ fill: "#eee" }} />
-                </BarChart>
+            <h3>Biểu đồ doanh thu bán hàng</h3>
+            <div style={{ minHeight: "300px", width: "50%" }}>
+                <Bar data={data} height={1} options={options} />
             </div>
         </div>
     );

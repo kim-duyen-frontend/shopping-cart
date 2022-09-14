@@ -5,6 +5,7 @@ import formatNumberToVND from "../utils/currency";
 import styles from "../styles/itemproduct.module.scss";
 
 const ItemProduct = ({ product }) => {
+    
     return (
         <Link href="/products/[id]" as={`/products/${product._id}`}>
             <Box padding={1} className={styles.itemProduct}>

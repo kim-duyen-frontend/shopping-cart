@@ -24,7 +24,7 @@ const ProductsPage = () => {
         <Box>
             <Navbar />
             <Container>
-                <Grid container spacing={1}>
+                <Grid container spacing={1} pt={4}>
                     <Grid item>
                         <Paper elevation={0}>
                             <Box>
