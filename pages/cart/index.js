@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { cartTotalSelector } from "../cart/selectors";
+import { cartTotalSelector } from "../../lib/selectors";
 import { removeFromCart } from "../cart/cartSlice";
 import styles from "../../styles/cart.module.scss";
 import formatNumberToVND from "../../utils/currency";
