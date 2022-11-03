@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Paper } from '@mui/material';
 import ProductsLayout from '../../components/products-layout';
-import { Box, Container, Grid, Paper } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import styles from "../../styles/productspage.module.scss";
 import { getProductsPage } from "../../utils/api/callAPI";
@@ -21,33 +21,22 @@ const ProductsPage = () => {
     const pagesArray = Array(totalPages.total).fill().map((_, index) => index + 1);
 
     return (
-        <Box>
+        <>
             <Navbar />
-            <Container>
-                <Grid container spacing={1} pt={4}>
-                    <Grid item>
-                        <Paper elevation={0}>
-                            <Box>
-                                <Grid container>
-                                    {productList.map((item) => (
-                                        <Grid item key={item._id} xs={12} sm={6} md={4} lg={3} align="center">
-                                            <ItemProduct product={item} />
-                                        </Grid>
-                                    ))}
-                                </Grid>
-                            </Box>
-                        </Paper>
-                        <div className={styles.pagination}>
-                            <Pagination
-                                count={totalPages.last_page}
-                                page={parseInt(pagesArray.join())}
-                                onChange={(event, value) => setPage(value)}
-                            />
-                        </div>
-                    </Grid>
-                </Grid>
-            </Container>
-        </Box>
+            <Paper elevation={0}>
+                {productList.map((item) => (
+                    <ItemProduct key={item._id} product={item} />
+                ))}
+            </Paper>
+            <div className={styles.pagination}>
+                <Pagination
+                    count={totalPages.last_page}
+                    page={parseInt(pagesArray.join())}
+                    onChange={(event, value) => setPage(value)}
+                />
+            </div>
+
+        </>
     );
 };
 
