@@ -18,6 +18,7 @@ const ChartProduct = () => {
             name: item.product.title,
             qty: item.quantity
         })))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     var data = {
         labels: dataSale.map(item => item.name),

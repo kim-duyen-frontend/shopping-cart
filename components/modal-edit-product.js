@@ -33,6 +33,7 @@ const ModalEditProduct = ({ isModalVisible, handleCloseModalEditProduct, dataPro
             setStore(dataProductModalEdit.store);
             setPrice(dataProductModalEdit.price);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dataProductModalEdit])
 
     const handleSaveModalEditProduct = async () => {

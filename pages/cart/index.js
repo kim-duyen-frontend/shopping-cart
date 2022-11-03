@@ -40,7 +40,7 @@ const CartPage = () => {
                     <NoSsr>
                         {productCart.map((item) => (
                             <div className={styles.lineProduct} key={item.product._id}>
-                                <Image priority src="/products/balo-1.png" width={150} height={150} objectFit="contain" />
+                                <Image priority src="/products/balo-1.png" width={150} height={150} objectFit="contain" alt={item.product.title} />
                                 <p>{item.product.title}</p>
                                 <p>{item.quantity}</p>
                                 <p>{formatNumberToVND(item.product.price)}</p>

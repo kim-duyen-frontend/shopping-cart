@@ -102,6 +102,7 @@ const DetailProduct = ({ id }) => {
 
     useEffect(() => {
         getProductById();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleChangeQty = (event) => {
@@ -139,7 +140,7 @@ const DetailProduct = ({ id }) => {
                     <div className={styles.leftCol}>
                         {dataSlideGallery.map((slide, index) => (
                             <div className={`${styles.image} ${index === slideIndex ? styles.active : ""}`} key={index}>
-                                <Image priority src={slide.thumbnail} layout="fill" objectFit="cover" />
+                                <Image priority src={slide.thumbnail} layout="fill" objectFit="cover" alt="main image slide" />
                             </div>
                         ))}
 
@@ -153,6 +154,7 @@ const DetailProduct = ({ id }) => {
                                         layout="responsive"
                                         objectFit="cover"
                                         onClick={(e) => handleChangeClickImage(e, index)}
+                                        alt="images slide"
                                     />
                                 </div>
                             ))}
@@ -201,7 +203,7 @@ const DetailProduct = ({ id }) => {
                         {dataSlideShow.map((item) => (
                             <div className={styles.item} key={item.id}>
                                 <div className={styles.image}>
-                                    <Image priority src={item.thumbnail} layout="fill" objectFit="contain" />
+                                    <Image priority src={item.thumbnail} layout="fill" objectFit="contain" alt={item.name} />
                                 </div>
                                 <div className={styles.infoSlide}>
                                     <span className={styles.name}>{item.name}</span>
