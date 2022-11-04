@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { myAPI } from "../../utils/api/callAPI";
 import styles from "../../styles/addproduct.module.scss";
 import Image from 'next/image';
@@ -16,6 +17,7 @@ const AddProduct = () => {
     })
     const [imageFile, setImageFile] = useState("");
     const [previewImage, setPreviewImage] = useState("");
+    const router = useRouter();
 
     const handleChangeField = (e, type) => {
         infoProduct[type] = e.target.value;
@@ -27,10 +29,24 @@ const AddProduct = () => {
         const filePreview = URL.createObjectURL(selectedFile);
         setPreviewImage(filePreview)
     }
-
+    
     const handCreateContent = async () => {
         try {
-            const response = await myAPI.post("/products", infoProduct).then((json) => console.log("push data successfully: ", json.data))
+            const response = await myAPI.post("/products", infoProduct).then((json) => console.log("push data successfully: ", json.data));
+            if (infoProduct.title !== "" && infoProduct.brand !== "" && infoProduct.origin !== "" && infoProduct.brandOrigin !== "" && infoProduct.category !== "" && infoProduct.store !== "" && infoProduct.price !== "" && infoProduct.description !== "") {
+                setInfoProduct((prevState) => ({
+                    ...prevState,
+                    title: "",
+                    brand: "",
+                    origin: "",
+                    brandOrigin: "",
+                    category: "",
+                    store: "",
+                    price: "",
+                    description: ""
+                }))
+            }
+            router.push("/products");
             return response?.data;
         } catch (error) {
             console.log("Failed push data!!!", error);
